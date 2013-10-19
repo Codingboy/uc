@@ -7,9 +7,6 @@
 #include <avr/interrupt.h>
 #include <avr/delay.h>
 
-	Led led1;
-	Gpio gpio1;
-
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
 	handleDebug();
@@ -19,9 +16,9 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 
 int main()
 {
-	initLed(&led1, &gpio1, 1,0,1);
 #ifdef DEBUG
 	initDebug();
+	setDebug(10);
 #endif
 	while (true)
 	{
