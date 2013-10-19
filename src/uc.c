@@ -145,5 +145,7 @@ int main()
 //toggleLed(&led1);
 onLed(&led1);
 _delay_ms(100);
+offLed(&led1);
+_delay_ms(100);
 	}
 }
