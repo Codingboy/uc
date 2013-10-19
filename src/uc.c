@@ -16,6 +16,10 @@ Gpio* DEBUGGPIO;
 
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
+onLed(&led1);
+_delay_ms(100);
+offLed(&led1);
+_delay_ms(100);
 	DEBUGSTATE++;
 	switch (DEBUGMODE)
 	{
@@ -142,8 +146,5 @@ int main()
 #endif
 	while (true)
 	{
-//toggleLed(&led1);
-toggleLed(&led1);
-_delay_ms(100);
 	}
 }
