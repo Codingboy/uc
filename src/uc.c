@@ -18,7 +18,7 @@ int main()
 {
 #ifdef DEBUG
 	initDebug();
-	setDebug(10);
+	setDebug(3);
 #endif
 	while (true)
 	{
