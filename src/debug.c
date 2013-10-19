@@ -7,16 +7,16 @@
 
 u8 DEBUGMODE;
 u8 DEBUGSTATE;
-Led* DEBUGLED;
-Gpio* DEBUGGPIO;
+Led DEBUGLED;
+Gpio DEBUGGPIO;
 
 void initDebug()
 {
 	DEBUGMODE = 0;
 	DEBUGSTATE = 0;
 
-	initLed(DEBUGLED, DEBUGGPIO, 4, 6, 1);
-	offLed(DEBUGLED);
+	initLed(&DEBUGLED, &DEBUGGPIO, 4, 6, 1);
+	offLed(&DEBUGLED);
 
 	//normal mode
 	TCCR0B &= ~(1<<WGM02);
@@ -59,10 +59,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 190:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 200:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -71,10 +71,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 90:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 100:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -83,10 +83,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 40:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 50:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -95,10 +95,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 190:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					break;
 				case 200:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -107,10 +107,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 90:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					break;
 				case 100:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -119,10 +119,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 40:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					break;
 				case 50:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -131,10 +131,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 100:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 200:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -143,10 +143,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 50:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 100:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -155,10 +155,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 25:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 50:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -167,10 +167,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 10:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 20:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
@@ -179,10 +179,10 @@ void handleDebug()
 			switch (DEBUGSTATE)
 			{
 				case 5:
-					onLed(DEBUGLED);
+					onLed(&DEBUGLED);
 					break;
 				case 10:
-					offLed(DEBUGLED);
+					offLed(&DEBUGLED);
 					DEBUGSTATE = 0;
 					break;
 			}
