@@ -74,7 +74,7 @@ flash: $(BIN)/uc.hex
 
 $(BIN)/uc.elf: $(OBJ)/uc.o $(MODULES)
 	$(MKDIR) $(BIN)
-	$(CC) $(CONTROLLER) -o $@ $^
+	$(CC) -DDEBUG $(CONTROLLER) -o $@ $^
 
 $(BIN)/uc.hex: $(BIN)/uc.elf
 	$(MKDIR) $(BIN)
