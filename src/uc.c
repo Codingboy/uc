@@ -13,6 +13,7 @@ Gpio* DEBUGGPIO;
 
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
+	onLed(&DEBUGLED);return;
 	DEBUGSTATE++;
 	switch (DEBUGMODE)
 	{
