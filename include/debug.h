@@ -15,6 +15,7 @@ void initDebug();
  * Depending on the mode, the debug LED will blink other.
  */
 void setDebug(u8 debugLevel);
+void handleDebug();
 
 #endif
 

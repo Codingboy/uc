@@ -5,10 +5,10 @@
 #include <avr/interrupt.h>
 #include "debug.h"
 
-extern u8 DEBUGMODE;
-extern u8 DEBUGSTATE;
-extern Led* DEBUGLED;
-extern Gpio* DEBUGGPIO;
+u8 DEBUGMODE;
+u8 DEBUGSTATE;
+Led* DEBUGLED;
+Gpio* DEBUGGPIO;
 
 void initDebug()
 {
@@ -48,6 +48,146 @@ void setDebug(u8 mode)
 {
 	DEBUGMODE = mode;
 	DEBUGSTATE = 0;
+}
+
+void handleDebug()
+{
+	DEBUGSTATE++;
+	switch (DEBUGMODE)
+	{
+		case 0:
+			switch (DEBUGSTATE)
+			{
+				case 190:
+					onLed(DEBUGLED);
+					break;
+				case 200:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 1:
+			switch (DEBUGSTATE)
+			{
+				case 90:
+					onLed(DEBUGLED);
+					break;
+				case 100:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 2:
+			switch (DEBUGSTATE)
+			{
+				case 40:
+					onLed(DEBUGLED);
+					break;
+				case 50:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 3:
+			switch (DEBUGSTATE)
+			{
+				case 190:
+					offLed(DEBUGLED);
+					break;
+				case 200:
+					onLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 4:
+			switch (DEBUGSTATE)
+			{
+				case 90:
+					offLed(DEBUGLED);
+					break;
+				case 100:
+					onLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 5:
+			switch (DEBUGSTATE)
+			{
+				case 40:
+					offLed(DEBUGLED);
+					break;
+				case 50:
+					onLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 6:
+			switch (DEBUGSTATE)
+			{
+				case 100:
+					onLed(DEBUGLED);
+					break;
+				case 200:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 7:
+			switch (DEBUGSTATE)
+			{
+				case 50:
+					onLed(DEBUGLED);
+					break;
+				case 100:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 8:
+			switch (DEBUGSTATE)
+			{
+				case 25:
+					onLed(DEBUGLED);
+					break;
+				case 50:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 9:
+			switch (DEBUGSTATE)
+			{
+				case 10:
+					onLed(DEBUGLED);
+					break;
+				case 20:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+		case 10:
+			switch (DEBUGSTATE)
+			{
+				case 5:
+					onLed(DEBUGLED);
+					break;
+				case 10:
+					offLed(DEBUGLED);
+					DEBUGSTATE = 0;
+					break;
+			}
+			break;
+	}
 }
 
 #endif
