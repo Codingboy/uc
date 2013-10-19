@@ -142,7 +142,8 @@ int main()
 #endif
 	while (true)
 	{
-toggleLed(&led1);
+//toggleLed(&led1);
+onLed(&led1);
 _delay_ms(100);
 	}
 }
