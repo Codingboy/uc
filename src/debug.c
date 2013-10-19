@@ -5,10 +5,10 @@
 #include <avr/interrupt.h>
 #include "debug.h"
 
-u8 DEBUGMODE;
-u8 DEBUGSTATE;
-Led* DEBUGLED;
-Gpio* DEBUGGPIO;
+extern u8 DEBUGMODE;
+extern u8 DEBUGSTATE;
+extern Led* DEBUGLED;
+extern Gpio* DEBUGGPIO;
 
 void initDebug()
 {

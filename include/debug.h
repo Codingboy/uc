@@ -3,6 +3,8 @@
 
 #ifdef DEBUG
 
+#include "typedefs.h"
+
 /**
  * Initialises the debug LED.
  */

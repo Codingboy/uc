@@ -2,11 +2,14 @@
 
 #ifdef DEBUG
 #include "debug.h"
+#include "gpio.h"
+#include "led.h"
+#include <avr/interrupt.h>
 
-extern u8 DEBUGMODE;
-extern u8 DEBUGSTATE;
-extern Led* DEBUGLED;
-extern Gpio* DEBUGGPIO;
+u8 DEBUGMODE;
+u8 DEBUGSTATE;
+Led* DEBUGLED;
+Gpio* DEBUGGPIO;
 
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
@@ -24,7 +27,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 					DEBUGSTATE = 0;
 					break;
 			}
-			break:
+			break;
 		case 1:
 			switch (DEBUGSTATE)
 			{
@@ -48,7 +51,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 					DEBUGSTATE = 0;
 					break;
 			}
-			break:
+			break;
 		case 3:
 			switch (DEBUGSTATE)
 			{
@@ -60,7 +63,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 					DEBUGSTATE = 0;
 					break;
 			}
-			break:
+			break;
 		case 4:
 			switch (DEBUGSTATE)
 			{
@@ -84,7 +87,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 					DEBUGSTATE = 0;
 					break;
 			}
-			break:
+			break;
 		case 6:
 			switch (DEBUGSTATE)
 			{
@@ -96,7 +99,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 					DEBUGSTATE = 0;
 					break;
 			}
-			break:
+			break;
 		case 7:
 			switch (DEBUGSTATE)
 			{
@@ -120,7 +123,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 					DEBUGSTATE = 0;
 					break;
 			}
-			break:
+			break;
 		default:
 			break;
 	}
@@ -135,6 +138,5 @@ int main()
 #endif
 	while (true)
 	{
-		
 	}
 }
