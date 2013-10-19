@@ -136,10 +136,10 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 
 int main()
 {
+	initLed(&led1, &gpio1, 1,0,1);
 #ifdef DEBUG
 	initDebug();
 #endif
-	initLed(&led1, &gpio1, 1,0,1);
 	while (true)
 	{
 	}
