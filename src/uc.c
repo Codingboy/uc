@@ -136,7 +136,7 @@ int main()
 {
 #ifdef DEBUG
 	initDebug();
-	sei();
+	onLed(&DEBUGLED);
 #endif
 	while (true)
 	{
