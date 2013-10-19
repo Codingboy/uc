@@ -10,13 +10,12 @@ u8 DEBUGMODE;
 u8 DEBUGSTATE;
 Led* DEBUGLED;
 Gpio* DEBUGGPIO;
+	Led led1;
+	Gpio gpio1;
 
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
-	Led led1;
-	Gpio gpio1;
-	initLed(&led1, &gpio1, 1,0,1);
-	onLed(&led1);return;
+	toggleLed(&led1);
 	DEBUGSTATE++;
 	switch (DEBUGMODE)
 	{
@@ -139,8 +138,8 @@ int main()
 {
 #ifdef DEBUG
 	initDebug();
-	onLed(&DEBUGLED);
 #endif
+	initLed(&led1, &gpio1, 1,0,1);
 	while (true)
 	{
 	}
