@@ -2,6 +2,7 @@ BINDIR=bin
 SRCDIR=src
 INCLUDEDIR=include
 OBJDIR=obj
+DOCDIR=doc
 
 TARGET=$(BINDIR)/uc
 MCU=atmega32u4
@@ -55,6 +56,7 @@ flash: hex
 clean:
 	$(RM) $(OBJDIR)/*
 	$(RM) $(BINDIR)/*
+	$(RMDIR) $(DOCDIR)
 
 trac:
 	tracd -s --port 8000 ./.trac &
