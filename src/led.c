@@ -36,7 +36,7 @@ void offLed(Led* led)
 
 void toggleLed(Led* led)
 {
-	toggleGpioOut(led);
+	toggleGpioOut(led->gpio);
 }
 
 u8 checkLed(Led* led)
