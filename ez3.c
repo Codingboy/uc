@@ -1,5 +1,6 @@
 #include "ez3.h"
 #include <avr/delay.h>
+#include "time.h"
 
 void initEz3(Ez3* ez3, Gpio* rx, u8 portRx, u8 bitRx, Gpio* tx, u8 portTx, u8 bitTx)
 {
@@ -25,18 +26,18 @@ u16 measureEz3(Ez3* ez3)
 	{
 	}
 	u32 timestamp = getTime();
-	while (getGpioIn(pw) && getTime() < timestamp+37000)
+	while (getGpioIn(pw) && getTime() < timestamp+37500)
 	{
 	}
 	u32 time = getTime();
-	if (time >= timestamp+37000)
+	if (time >= timestamp+37500)
 	{
 		return 0;//no object in range
 	}
 	else
 	{
 		u16 ret = time/58;
-		if (time%58 >= 29)
+		if (time%58 >= 58/2)
 		{
 			ret++;
 		}

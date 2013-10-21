@@ -44,3 +44,10 @@ inline u32 convertTimeMS(u32 time)
 {
 	return time/1000;
 }
+
+ISR(TIMER1_OVF_vect)//each 100µs
+{
+	incrementTime();
+	TCNT1H = 0xff;
+	TCNT1L = 0xff - 25;
+}
