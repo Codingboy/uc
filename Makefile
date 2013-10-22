@@ -1,3 +1,5 @@
+LUFA_PATH=/home/bla/Downloads/LUFA-130901/LUFA
+
 BINDIR=bin
 SRCDIR=src
 INCLUDEDIR=include
@@ -12,12 +14,12 @@ F_CPU=16000000
 F_USB=$(F_CPU)
 F_CLOCK=$(F_CPU)
 CONTROLLER=-mmcu=$(MCU)
-SRC=$(SRCDIR)/debug.c $(SRCDIR)/descriptors.c $(SRCDIR)/led.c $(SRCDIR)/gpio.c $(SRCDIR)/usb.c $(SRCDIR)/uc.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) $(LUFA_SRC_PLATFORM)
-LUFA_PATH=/home/bla/Downloads/LUFA-130901/LUFA
+C_STANDARD=c99
 
 CC=avr-gcc
 USBFLAGS=-DUSE_FLASH_DESCRIPTORS -DUSE_STATIC_OPTIONS="(USE_DEVICE_OPT_FULLSPEED | USB_OPT_AUTO_PLL)" -DUSB_DEVICE_ONLY
-CC_FLAGS=-c -Wall -std=c99 $(CONTROLLER) -DF_CPU=$(F_CPU) -DF_USB=$(F_USB) -DMCU=$(MCU) -DARCH=$(ARCH) -DBOARD=$(BOARD) -DF_CLOCK=$(F_CLOCK) $(USBFLAGS) -DDEBUG -I$(LUFA_PATH)/Drivers/USB/ -I$(LUFA_PATH)/Drivers/USB/Core/AVR8/ -DIN_EPNUM=1 -DOUT_EPNUM=2 -DIO_EPSIZE=8 -Iinclude -DUSB
+#CC_FLAGS=-c -Wall -std=c99 $(CONTROLLER) -DF_CPU=$(F_CPU) -DF_USB=$(F_USB) -DMCU=$(MCU) -DARCH=$(ARCH) -DBOARD=$(BOARD) -DF_CLOCK=$(F_CLOCK) $(USBFLAGS) -DDEBUG -I$(LUFA_PATH)/Drivers/USB/ -I$(LUFA_PATH)/Drivers/USB/Core/AVR8/ -DIN_EPNUM=1 -DOUT_EPNUM=2 -DIO_EPSIZE=8 -Iinclude -DUSB
+CC_FLAGS=$(USBFLAGS) -DDEBUG -I$(LUFA_PATH)/Drivers/USB/ -I$(LUFA_PATH)/Drivers/USB/Core/AVR8/ -DIN_EPNUM=1 -DOUT_EPNUM=2 -DIO_EPSIZE=8 -Iinclude -DUSB
 
 MKDIR=mkdir -p
 RM=rm -f
@@ -30,9 +32,10 @@ INSTALL=apt-get install -y
 
 .PHONY: all time help installdep version major minor build clean commit doc trac flash uc
 
+include $(LUFA_PATH)/Build/lufa_sources.mk
+SRC=$(SRCDIR)/debug.c $(SRCDIR)/descriptors.c $(SRCDIR)/led.c $(SRCDIR)/gpio.c $(SRCDIR)/usb.c $(SRCDIR)/uc.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) $(LUFA_SRC_PLATFORM)
 include $(LUFA_PATH)/Build/lufa_core.mk
 include $(LUFA_PATH)/Build/lufa_build.mk
-include $(LUFA_PATH)/Build/lufa_sources.mk
 
 all: flash
 

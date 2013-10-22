@@ -1,16 +1,47 @@
 #include <stdbool.h>
-
-#ifdef DEBUG
 #include "debug.h"
 #include "gpio.h"
 #include "led.h"
 #include <avr/interrupt.h>
 #include <avr/delay.h>
 
+#ifdef USB
 #include <USB.h>
 #include <Endpoint_AVR8.h>
+#include "descriptors.h"
+void EVENT_USB_Device_ControlRequest(void)
+{
+	if (((USB_ControlRequest.bmRequestType & CONTROL_REQTYPE_TYPE) == REQTYPE_VENDOR)//type == vendor
+		&& ((USB_ControlRequest.bmRequestType & CONTROL_REQTYPE_RECIPIENT) == REQREC_DEVICE))//recipient == device
+	{
+		if ((USB_ControlRequest.bmRequestType & CONTROL_REQTYPE_DIRECTION) == REQDIR_HOSTTODEVICE)//host sends
+		{
+			switch (USB_ControlRequest.bRequest)
+			{
+				default:
+					break;
+			}
+		}
+		else//device sends
+		{
+			switch (USB_ControlRequest.bRequest)
+			{
+				default:
+					break;
+			}
+		}
+	}
+}
 
-int main();
+void EVENT_USB_Device_Configuration_Changed()
+{
+	//controlendpoint is configured internally by lufa with default settings
+	//Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_IN, ENDPOINT_CONTROLEP_DEFAULT_SIZE, ENDPOINT_BANK_SINGLE);
+	///\todo do i need those endpoints?
+	Endpoint_ConfigureEndpoint(IN_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
+	Endpoint_ConfigureEndpoint(OUT_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
+}
+#endif
 
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
@@ -62,14 +93,14 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 	}
 #endif
 }
-#endif
+
+
 
 int main()
 {
-#ifdef DEBUG
 	initDebug();
-	setDebug(3);
-#endif
+	sei();
+	setDebug(2);
 #ifdef USB
 	//MCUSR &= ~(1<<WDRF);
 	//wdt_disable();
@@ -77,6 +108,7 @@ int main()
 	while (USB_DeviceState != DEVICE_STATE_Configured)
 	{
 	}
+	setDebug(1);
 #endif
 	while (true)
 	{
