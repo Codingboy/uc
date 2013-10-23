@@ -40,8 +40,6 @@ void initDebug()
 
 	//enable overflow interrupts
 	TIMSK0 |= 1<<TOIE0;
-
-	sei();
 }
 
 void setDebug(u8 mode)
