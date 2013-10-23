@@ -18,6 +18,7 @@ void incrementTime();
 /**
  * Gets the time.
  * @return time in µs
+ * @pre time is initialised
  * @info threadsafe
  */
 u32 getTime();
