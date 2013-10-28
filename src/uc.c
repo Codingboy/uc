@@ -4,6 +4,8 @@
 #include "led.h"
 #include <avr/interrupt.h>
 #include <avr/delay.h>
+#include <avr/wdt.h>
+#include <avr/power.h>
 
 #ifdef USB
 #include <USB.h>
@@ -33,7 +35,7 @@ void EVENT_USB_Device_ControlRequest(void)
 	}
 }
 
-void EVENT_USB_Device_Configuration_Changed()
+void EVENT_USB_Device_ConfigurationChanged()
 {
 	//controlendpoint is configured internally by lufa with default settings
 	//Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_IN, ENDPOINT_CONTROLEP_DEFAULT_SIZE, ENDPOINT_BANK_SINGLE);
@@ -102,9 +104,10 @@ int main()
 	sei();
 	setDebug(2);
 #ifdef USB
-	//MCUSR &= ~(1<<WDRF);
-	//wdt_disable();
+	MCUSR &= ~(1<<WDRF);
+	wdt_disable();
 	//clock_prescale_set(clock_div_1);
+	USB_Init();
 	while (USB_DeviceState != DEVICE_STATE_Configured)
 	{
 	}

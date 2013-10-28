@@ -54,7 +54,7 @@ installdep:
 	$(INSTALL) binutils-avr
 	$(INSTALL) avrdude
 
-flash: hex
+flash: bin/uc.hex
 	avrdude -p m32u4 -P /dev/ttyACM0 -c avr109 -U flash:w:$<:i
 	make build
 
