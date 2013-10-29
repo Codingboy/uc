@@ -16,21 +16,8 @@ Gpio gpioLed1;
 void usbSetLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
-	u8 recvData = 0;
-	while (recvData < 0)//never
-	{
-		while (!Endpoint_IsOUTReceived())
-		{
-			//wait for data
-		}
-		Endpoint_ClearOUT();//ack data packet
-	}
 	onLed(&led1);
-	while (!Endpoint_IsINReady())
-	{
-		//wait until host ready to recv
-	}
-	Endpoint_ClearIN();//ack
+	Endpoint_ClearStatusStage();//ack control request
 }
 #if 0
 void usbGetLed(void)
@@ -60,21 +47,14 @@ void usbGetLed(void)
 void usbClearLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
-	u8 recvData = 0;
-	while (recvData < 0)//never
-	{
-		while (!Endpoint_IsOUTReceived())
-		{
-			//wait for data
-		}
-		Endpoint_ClearOUT();//ack data packet
-	}
 	offLed(&led1);
-	while (!Endpoint_IsINReady())
-	{
-		//wait until host ready to recv
-	}
-	Endpoint_ClearIN();//ack
+	Endpoint_ClearStatusStage();//ack control request
+}
+void usbToggleLed(void)
+{
+	Endpoint_ClearSETUP();//ack setup packet
+	toggleLed(&led1);
+	Endpoint_ClearStatusStage();//ack control request
 }
 
 void EVENT_USB_Device_ControlRequest(void)
@@ -93,7 +73,7 @@ void EVENT_USB_Device_ControlRequest(void)
 					usbSetLed();
 					break;
 				case 2:
-					//usbToggleLed();
+					usbToggleLed();
 					break;
 				default:
 					break;
@@ -176,7 +156,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 int main(void)
 {
 	initDebug();
-	initLed(&led1, &gpioLed1, 0, 0, 1);
+	initLed(&led1, &gpioLed1, 1, 0, 1);
 	sei();
 	setDebug(2);
 #ifdef USB
