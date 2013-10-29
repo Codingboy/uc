@@ -15,7 +15,16 @@ void initDebug();
  * Depending on the mode, the debug LED will blink other.
  */
 void setDebug(u8 debugLevel);
+
+/**
+ * This function handles the debugled and must be called each 10 ms.
+ */
 void handleDebug();
+
+/**
+ * Halts the system until BREAKPOINT is cleared by an ISR.
+ */
+void breakpointDebug();
 
 #endif
 

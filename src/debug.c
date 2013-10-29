@@ -9,6 +9,16 @@ static u8 DEBUGMODE;
 static u8 DEBUGSTATE;
 static Led DEBUGLED;
 static Gpio DEBUGGPIO;
+static u8 BREAKPOINT;
+
+void breakpointDebug()
+{
+	BREAKPOINT = 1;
+	while (BREAKPOINT)
+	{
+
+	}
+}
 
 void initDebug()
 {

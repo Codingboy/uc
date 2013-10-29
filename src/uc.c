@@ -11,6 +11,72 @@
 #include <USB.h>
 #include <Endpoint_AVR8.h>
 #include "descriptors.h"
+Led led1;
+Gpio gpioLed1;
+void usbSetLed()
+{
+	Endpoint_ClearSETUP();//ack setup packet
+	u8 recvData = 0;
+	while (recvData < 0)//never
+	{
+		while (!Endpoint_IsOUTReceived())
+		{
+			//wait for data
+		}
+		Endpoint_ClearOUT();//ack data packet
+	}
+	onLed(led1);
+	while (!Endpoint_IsINReady())
+	{
+		//wait until host ready to recv
+	}
+	Endpoint_ClearIN();//ack
+}
+#if 0
+void usbGetLed()
+{
+	Endpoint_ClearSETUP();//ack setup packet
+	u8 sendData = 0;
+	while (sendData < 1)
+	{
+		while (!Endpoint_IsINReady())
+		{
+			//wait until host is ready
+		}
+		u8 state = stateLed(led2);
+		Endpoint_Write_8(state);
+		sendData++;
+		Endpoint_ClearIN();
+	}
+	while (!Endpoint_IsOUTReceived())
+	{
+		//wait for host to send status
+	}
+	Endpoint_ClearOUT();//send message
+	//rumgefrickel, works without this function dont know why
+	//Endpoint_ClearStatusStage();//success :D
+}
+#endif
+void usbClearLed()
+{
+	Endpoint_ClearSETUP();//ack setup packet
+	u8 recvData = 0;
+	while (recvData < 0)//never
+	{
+		while (!Endpoint_IsOUTReceived())
+		{
+			//wait for data
+		}
+		Endpoint_ClearOUT();//ack data packet
+	}
+	offLed(led1);
+	while (!Endpoint_IsINReady())
+	{
+		//wait until host ready to recv
+	}
+	Endpoint_ClearIN();//ack
+}
+
 void EVENT_USB_Device_ControlRequest(void)
 {
 	if (((USB_ControlRequest.bmRequestType & CONTROL_REQTYPE_TYPE) == REQTYPE_VENDOR)//type == vendor
@@ -20,6 +86,12 @@ void EVENT_USB_Device_ControlRequest(void)
 		{
 			switch (USB_ControlRequest.bRequest)
 			{
+				case 0:
+					usbClearLed();
+					break;
+				case 1:
+					usbSetLed();
+					break;
 				default:
 					break;
 			}
@@ -101,6 +173,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 int main()
 {
 	initDebug();
+	initLed(&led, &gpioLed1, 0, 0, 1);
 	sei();
 	setDebug(2);
 #ifdef USB
