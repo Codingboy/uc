@@ -11,7 +11,7 @@ static Led DEBUGLED;
 static Gpio DEBUGGPIO;
 static u8 BREAKPOINT;
 
-void breakpointDebug()
+void breakpointDebug(void)
 {
 	BREAKPOINT = 1;
 	while (BREAKPOINT)
@@ -20,7 +20,7 @@ void breakpointDebug()
 	}
 }
 
-void initDebug()
+void initDebug(void)
 {
 	DEBUGMODE = 0;
 	DEBUGSTATE = 0;
@@ -58,7 +58,7 @@ void setDebug(u8 mode)
 	DEBUGSTATE = 0;
 }
 
-void handleDebug()
+void handleDebug(void)
 {
 	DEBUGSTATE++;
 	switch (DEBUGMODE)

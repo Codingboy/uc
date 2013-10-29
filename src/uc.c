@@ -13,7 +13,7 @@
 #include "descriptors.h"
 Led led1;
 Gpio gpioLed1;
-void usbSetLed()
+void usbSetLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
 	u8 recvData = 0;
@@ -33,7 +33,7 @@ void usbSetLed()
 	Endpoint_ClearIN();//ack
 }
 #if 0
-void usbGetLed()
+void usbGetLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
 	u8 sendData = 0;
@@ -57,7 +57,7 @@ void usbGetLed()
 	//Endpoint_ClearStatusStage();//success :D
 }
 #endif
-void usbClearLed()
+void usbClearLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
 	u8 recvData = 0;
@@ -110,7 +110,7 @@ void EVENT_USB_Device_ControlRequest(void)
 	}
 }
 
-void EVENT_USB_Device_ConfigurationChanged()
+void EVENT_USB_Device_ConfigurationChanged(void)
 {
 	//controlendpoint is configured internally by lufa with default settings
 	//Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_IN, ENDPOINT_CONTROLEP_DEFAULT_SIZE, ENDPOINT_BANK_SINGLE);
@@ -173,7 +173,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 
 
 
-int main()
+int main(void)
 {
 	initDebug();
 	initLed(&led1, &gpioLed1, 0, 0, 1);

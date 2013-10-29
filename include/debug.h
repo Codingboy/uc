@@ -8,7 +8,7 @@
 /**
  * Initialises the debug LED.
  */
-void initDebug();
+void initDebug(void);
 
 /**
  * Sets a debugmode.
@@ -19,12 +19,12 @@ void setDebug(u8 debugLevel);
 /**
  * This function handles the debugled and must be called each 10 ms.
  */
-void handleDebug();
+void handleDebug(void);
 
 /**
  * Halts the system until BREAKPOINT is cleared by an ISR.
  */
-void breakpointDebug();
+void breakpointDebug(void);
 
 #endif
 
