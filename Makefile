@@ -1,4 +1,4 @@
-LUFA_PATH=/home/dtk/Downloads/LUFA-130901/LUFA
+LUFA_PATH=/home/bla/Downloads/LUFA-130901/LUFA
 
 BINDIR=bin
 SRCDIR=src

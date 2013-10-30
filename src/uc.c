@@ -128,7 +128,6 @@ void usbCheckLed(void)
 	}
 	Endpoint_Write_8(state);
 	Endpoint_ClearIN();
-	Endpoint_ClearStatusStage();//ack control request
 #if 0
 	while (!Endpoint_IsOUTReceived())
 	{
@@ -151,18 +150,22 @@ off led
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_HOSTTODEVICE
 	bRequest = 0
 	wValue = [0;3]
+	wLength = 0
 on led
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_HOSTTODEVICE
 	bRequest = 1
 	wValue = [0;3]
+	wLength = 0
 toggle led
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_HOSTTODEVICE
 	bRequest = 2
 	wValue = [0;3]
+	wLength = 0
 check led
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_DEVICETOHOST
 	bRequest = 3
 	wValue = [0;3]
+	wLength = 1
 read ez3
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_DEVICETOHOST
 	bRequest = 4
@@ -214,8 +217,8 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 	//controlendpoint is configured internally by lufa with default settings
 	//Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_IN, ENDPOINT_CONTROLEP_DEFAULT_SIZE, ENDPOINT_BANK_SINGLE);
 	///\todo do i need those endpoints?
-	//Endpoint_ConfigureEndpoint(IN_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
-	//Endpoint_ConfigureEndpoint(OUT_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
+	Endpoint_ConfigureEndpoint(IN_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
+	Endpoint_ConfigureEndpoint(OUT_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
 }
 
 ISR(TIMER0_OVF_vect)//each 10 ms
