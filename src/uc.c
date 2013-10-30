@@ -20,17 +20,108 @@ Gpio gpioLed2;
 Led led3;
 Gpio gpioLed3;
 
-void usbSetLed(void)
+void usbOnLed(void)
 {
+	if (USB_ControlRequest.wValue >= 4)
+	{
+		Endpoint_StallTransaction();
+		return;
+	}
 	Endpoint_ClearSETUP();//ack setup packet
-	onLed(&led0);
+	switch (USB_ControlRequest.wValue)
+	{
+		case 0:
+			onLed(&led0);
+			break;
+		case 1:
+			onLed(&led1);
+			break;
+		case 2:
+			onLed(&led2);
+			break;
+		case 3:
+			onLed(&led3);
+			break;
+	}
 	Endpoint_ClearStatusStage();//ack control request
 }
 
-void usbGetLed(void)
+void usbOffLed(void)
 {
+	if (USB_ControlRequest.wValue >= 4)
+	{
+		Endpoint_StallTransaction();
+		return;
+	}
 	Endpoint_ClearSETUP();//ack setup packet
-	u8 state = checkLed(&led0);
+	switch (USB_ControlRequest.wValue)
+	{
+		case 0:
+			offLed(&led0);
+			break;
+		case 1:
+			offLed(&led1);
+			break;
+		case 2:
+			offLed(&led2);
+			break;
+		case 3:
+			offLed(&led3);
+			break;
+	}
+	Endpoint_ClearStatusStage();//ack control request
+}
+
+void usbToggleLed(void)
+{
+	if (USB_ControlRequest.wValue >= 4)
+	{
+		Endpoint_StallTransaction();
+		return;
+	}
+	Endpoint_ClearSETUP();//ack setup packet
+	switch (USB_ControlRequest.wValue)
+	{
+		case 0:
+			toggleLed(&led0);
+			break;
+		case 1:
+			toggleLed(&led1);
+			break;
+		case 2:
+			toggleLed(&led2);
+			break;
+		case 3:
+			toggleLed(&led3);
+			break;
+	}
+	Endpoint_ClearStatusStage();//ack control request
+}
+
+void usbCheckLed(void)
+{
+	if (USB_ControlRequest.wValue >= 4)
+	{
+		Endpoint_StallTransaction();
+		return;
+	}
+	Endpoint_ClearSETUP();//ack setup packet
+	u8 state;
+	switch (USB_ControlRequest.wValue)
+	{
+		case 0:
+			state = checkLed(&led0);
+			break;
+		case 1:
+			state = checkLed(&led1);
+			break;
+		case 2:
+			state = checkLed(&led2);
+			break;
+		case 3:
+			state = checkLed(&led3);
+			break;
+	}
 	while (!Endpoint_IsINReady())
 	{
 		//wait until host is ready
@@ -48,20 +139,6 @@ void usbGetLed(void)
 #endif
 }
 
-void usbClearLed(void)
-{
-	Endpoint_ClearSETUP();//ack setup packet
-	offLed(&led0);
-	Endpoint_ClearStatusStage();//ack control request
-}
-
-void usbToggleLed(void)
-{
-	Endpoint_ClearSETUP();//ack setup packet
-	toggleLed(&led0);
-	Endpoint_ClearStatusStage();//ack control request
-}
-
 /*
 clear led: 0 <lednumber>
 set led: 1 <lednumber>
@@ -77,10 +154,10 @@ void EVENT_USB_Device_ControlRequest(void)
 			switch (USB_ControlRequest.bRequest)
 			{
 				case 0:
-					usbClearLed();
+					usbOffLed();
 					break;
 				case 1:
-					usbSetLed();
+					usbOnLed();
 					break;
 				case 2:
 					usbToggleLed();
@@ -94,7 +171,7 @@ void EVENT_USB_Device_ControlRequest(void)
 			switch (USB_ControlRequest.bRequest)
 			{
 				case 3:
-					usbGetLed();
+					usbCheckLed();
 					break;
 				default:
 					break;
