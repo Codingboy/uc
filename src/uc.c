@@ -139,6 +139,12 @@ void usbCheckLed(void)
 #endif
 }
 
+void usbReadEz3(void)
+{
+	Endpoint_ClearSETUP();//ack setup packet
+	Endpoint_ClearStatusStage();//ack control request
+}
+
 /*
 off led
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_HOSTTODEVICE
@@ -156,6 +162,10 @@ check led
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_DEVICETOHOST
 	bRequest = 3
 	wValue = [0;3]
+read ez3
+	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_DEVICETOHOST
+	bRequest = 4
+	dataOUT = 
 */
 void EVENT_USB_Device_ControlRequest(void)
 {
@@ -175,6 +185,8 @@ void EVENT_USB_Device_ControlRequest(void)
 				case 2:
 					usbToggleLed();
 					break;
+				case 5:
+					break;
 				default:
 					break;
 			}
@@ -185,6 +197,9 @@ void EVENT_USB_Device_ControlRequest(void)
 			{
 				case 3:
 					usbCheckLed();
+					break;
+				case 4:
+					usbReadEz3();
 					break;
 				default:
 					break;
