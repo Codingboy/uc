@@ -5,11 +5,11 @@
 #include <avr/interrupt.h>
 #include "debug.h"
 
-static u8 DEBUGMODE;
-static u8 DEBUGSTATE;
+static volatile u8 DEBUGMODE;
+static volatile u8 DEBUGSTATE;
 static Led DEBUGLED;
 static Gpio DEBUGGPIO;
-static u8 BREAKPOINT;
+static volatile u8 BREAKPOINT;
 
 void breakpointDebug(void)
 {
