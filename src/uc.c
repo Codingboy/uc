@@ -26,7 +26,7 @@ void usbSetLed(void)
 	onLed(&led0);
 	Endpoint_ClearStatusStage();//ack control request
 }
-#if 0
+
 void usbGetLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
@@ -42,6 +42,7 @@ void usbGetLed(void)
 		sendData++;
 		Endpoint_ClearIN();
 	}
+#if 0
 	while (!Endpoint_IsOUTReceived())
 	{
 		//wait for host to send status
@@ -49,8 +50,9 @@ void usbGetLed(void)
 	Endpoint_ClearOUT();//send message
 	//rumgefrickel, works without this function dont know why
 	//Endpoint_ClearStatusStage();//success :D
-}
 #endif
+}
+
 void usbClearLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
