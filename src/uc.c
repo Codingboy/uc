@@ -128,6 +128,7 @@ void usbCheckLed(void)
 	}
 	Endpoint_Write_8(state);
 	Endpoint_ClearIN();
+	Endpoint_ClearStatusStage();//ack control request
 #if 0
 	while (!Endpoint_IsOUTReceived())
 	{
