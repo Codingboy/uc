@@ -65,6 +65,11 @@ void usbToggleLed(void)
 	Endpoint_ClearStatusStage();//ack control request
 }
 
+/*
+clear led: 0 <lednumber>
+set led: 1 <lednumber>
+toggle led: 2 <lednumber>
+*/
 void EVENT_USB_Device_ControlRequest(void)
 {
 	if (((USB_ControlRequest.bmRequestType & CONTROL_REQTYPE_TYPE) == REQTYPE_VENDOR)//type == vendor
