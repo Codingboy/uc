@@ -30,18 +30,13 @@ void usbSetLed(void)
 void usbGetLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
-	u8 sendData = 0;
-	while (sendData < 1)
+	u8 state = checkLed(&led0);
+	while (!Endpoint_IsINReady())
 	{
-		while (!Endpoint_IsINReady())
-		{
-			//wait until host is ready
-		}
-		u8 state = stateLed(led2);
-		Endpoint_Write_8(state);
-		sendData++;
-		Endpoint_ClearIN();
+		//wait until host is ready
 	}
+	Endpoint_Write_8(state);
+	Endpoint_ClearIN();
 #if 0
 	while (!Endpoint_IsOUTReceived())
 	{
@@ -98,6 +93,9 @@ void EVENT_USB_Device_ControlRequest(void)
 		{
 			switch (USB_ControlRequest.bRequest)
 			{
+				case 3:
+					usbGetLed();
+					break;
 				default:
 					break;
 			}
