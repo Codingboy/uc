@@ -33,7 +33,7 @@ INSTALL=apt-get install -y
 .PHONY: all time help installdep version major minor build clean commit doc trac flash uc
 
 include $(LUFA_PATH)/Build/lufa_sources.mk
-SRC=$(SRCDIR)/debug.c $(SRCDIR)/descriptors.c $(SRCDIR)/led.c $(SRCDIR)/gpio.c $(SRCDIR)/uc.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) $(LUFA_SRC_PLATFORM)
+SRC=$(SRCDIR)/debug.c $(SRCDIR)/descriptors.c $(SRCDIR)/led.c $(SRCDIR)/gpio.c $(SRCDIR)/ez3.c $(SRCDIR)/time.c $(SRCDIR)/uc.c $(LUFA_SRC_USB) $(LUFA_SRC_USBCLASS) $(LUFA_SRC_PLATFORM)
 include $(LUFA_PATH)/Build/lufa_core.mk
 include $(LUFA_PATH)/Build/lufa_build.mk
 

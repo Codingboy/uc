@@ -2,7 +2,7 @@
 #include <avr/delay.h>
 #include "time.h"
 
-void initEz3(Ez3* ez3, Gpio* rx, u8 portRx, u8 bitRx, Gpio* tx, u8 portTx, u8 bitTx)
+void initEz3(Ez3* ez3, Gpio* rx, u8 portRx, u8 bitRx, Gpio* tx, u8 portTx, u8 bitTx, Gpio* pw, u8 portPw, u8 bitPw)
 {
 	initGpio(rx, portRx, bitRx);
 	initGpio(tx, portTx, bitTx);
@@ -22,11 +22,11 @@ u16 measureEz3(Ez3* ez3)
 	setGpioOut(ez3->rx);
 	_delay_us(20);
 	clearGpioOut(ez3->rx);
-	while (!getGpioIn(pw))
+	while (!getGpioIn(ez3->pw))
 	{
 	}
 	u32 timestamp = getTime();
-	while (getGpioIn(pw) && getTime() < timestamp+37500)
+	while (getGpioIn(ez3->pw) && getTime() < timestamp+37500)
 	{
 	}
 	u32 time = getTime();

@@ -7,6 +7,7 @@ typedef struct
 {
 	Gpio* rx;
 	Gpio* tx;
+	Gpio* pw;
 } Ez3;
 
 /**
@@ -14,7 +15,7 @@ typedef struct
  * When this function is called, the range between EZ3 sensor and objects in front of it shall be minimum 17.78 cm, optimum 35.56 cm or greater.
  * @post \p ez3 is initialised
  */
-void initEz3(Ez3* ez3, Gpio* rx, u8 portRx, u8 bitRx, Gpio* tx, u8 portTx, u8 bitTx);
+void initEz3(Ez3* ez3, Gpio* rx, u8 portRx, u8 bitRx, Gpio* tx, u8 portTx, u8 bitTx, Gpio* pw, u8 portPw, u8 bitPw);
 
 /**
  * Measures the range between EZ3 sensor and an object.

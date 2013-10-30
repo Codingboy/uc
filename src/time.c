@@ -1,11 +1,11 @@
 static u32 TIME;//time in µs
 
-void incrementTime()
+void incrementTime(void)
 {
 	TIME += 100;
 }
 
-void initTime()
+void initTime(void)
 {
 	TIME = 0;
 
@@ -39,7 +39,7 @@ void initTime()
 	TCNT1L = 0xff - 25;
 }
 
-u32 getTime()
+u32 getTime(void)
 {
 	u8 sreg = SREG;
 	cli();
