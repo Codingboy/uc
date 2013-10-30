@@ -253,8 +253,6 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 #endif
 }
 
-
-
 int main(void)
 {
 	initDebug();
