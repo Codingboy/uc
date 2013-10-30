@@ -7,16 +7,23 @@
 #include <avr/wdt.h>
 #include <avr/power.h>
 
-#ifdef USB
 #include <USB.h>
 #include <Endpoint_AVR8.h>
 #include "descriptors.h"
+
+Led led0;
+Gpio gpioLed0;
 Led led1;
 Gpio gpioLed1;
+Led led2;
+Gpio gpioLed2;
+Led led3;
+Gpio gpioLed3;
+
 void usbSetLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
-	onLed(&led1);
+	onLed(&led0);
 	Endpoint_ClearStatusStage();//ack control request
 }
 #if 0
@@ -47,13 +54,14 @@ void usbGetLed(void)
 void usbClearLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
-	offLed(&led1);
+	offLed(&led0);
 	Endpoint_ClearStatusStage();//ack control request
 }
+
 void usbToggleLed(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
-	toggleLed(&led1);
+	toggleLed(&led0);
 	Endpoint_ClearStatusStage();//ack control request
 }
 
@@ -95,17 +103,16 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 	//controlendpoint is configured internally by lufa with default settings
 	//Endpoint_ConfigureEndpoint(ENDPOINT_CONTROLEP, EP_TYPE_CONTROL, ENDPOINT_DIR_IN, ENDPOINT_CONTROLEP_DEFAULT_SIZE, ENDPOINT_BANK_SINGLE);
 	///\todo do i need those endpoints?
-	Endpoint_ConfigureEndpoint(IN_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
-	Endpoint_ConfigureEndpoint(OUT_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
+	//Endpoint_ConfigureEndpoint(IN_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
+	//Endpoint_ConfigureEndpoint(OUT_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
 }
-#endif
 
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
 	handleDebug();
 	TCNT0 = 256-157;//each 10 ms
-#ifdef USB
 	USB_USBTask();
+#if 0
 	if (USB_DeviceState == DEVICE_STATE_Configured)
 	{
 		Endpoint_SelectEndpoint(OUT_EPNUM);
@@ -156,19 +163,20 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 int main(void)
 {
 	initDebug();
-	initLed(&led1, &gpioLed1, 1, 0, 1);
-	sei();
 	setDebug(2);
-#ifdef USB
+	initLed(&led0, &gpioLed0, 1, 0, 1);
+	initLed(&led1, &gpioLed1, 1, 1, 1);
+	initLed(&led2, &gpioLed2, 1, 2, 1);
+	initLed(&led3, &gpioLed3, 1, 3, 1);
 	MCUSR &= ~(1<<WDRF);
 	wdt_disable();
 	//clock_prescale_set(clock_div_1);
 	USB_Init();
+	sei();
 	while (USB_DeviceState != DEVICE_STATE_Configured)
 	{
 	}
 	setDebug(1);
-#endif
 	while (true)
 	{
 	}
