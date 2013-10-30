@@ -140,9 +140,22 @@ void usbCheckLed(void)
 }
 
 /*
-clear led: 0 <lednumber>
-set led: 1 <lednumber>
-toggle led: 2 <lednumber>
+off led
+	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_HOSTTODEVICE
+	bRequest = 0
+	wValue = [0;3]
+on led
+	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_HOSTTODEVICE
+	bRequest = 1
+	wValue = [0;3]
+toggle led
+	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_HOSTTODEVICE
+	bRequest = 2
+	wValue = [0;3]
+check led
+	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_DEVICETOHOST
+	bRequest = 3
+	wValue = [0;3]
 */
 void EVENT_USB_Device_ControlRequest(void)
 {
