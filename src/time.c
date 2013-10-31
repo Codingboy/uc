@@ -1,3 +1,7 @@
+#include <avr/io.h>
+#include "time.h"
+#include <avr/interrupt.h>
+
 static u32 TIME;//time in µs
 
 void incrementTime(void)

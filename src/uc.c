@@ -20,6 +20,10 @@ Led led2;
 Gpio gpioLed2;
 Led led3;
 Gpio gpioLed3;
+Ez3 ez3;
+Gpio ez3pw;
+Gpio ez3tx;
+Gpio ez3rx;
 
 void usbOnLed(void)
 {
@@ -287,11 +291,6 @@ int main(void)
 	initLed(&led1, &gpioLed1, 1, 1, 1);
 	initLed(&led2, &gpioLed2, 1, 2, 1);
 	initLed(&led3, &gpioLed3, 1, 3, 1);
-void initEz3(Ez3* ez3, Gpio* rx, u8 portRx, u8 bitRx, Gpio* tx, u8 portTx, u8 bitTx)
-	Ez3 ez3;
-	Gpio ez3rx;
-	Gpio ez3tx;
-	Gpio ez3pw;
 	initEz3(&ez3, &ez3rx, 3, 1, &ez3tx, 3, 0, &ez3pw, 3, 2);
 	MCUSR &= ~(1<<WDRF);
 	wdt_disable();

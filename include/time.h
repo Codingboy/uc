@@ -7,13 +7,13 @@
  * Initialises the time.
  * @post time is initialised
  */
-void initTime();
+void initTime(void);
 
 /**
  * Increments the time in 100 µs steps.
  * @pre time is initialised
  */
-void incrementTime();
+void incrementTime(void);
 
 /**
  * Gets the time.
@@ -21,7 +21,7 @@ void incrementTime();
  * @pre time is initialised
  * @info threadsafe
  */
-u32 getTime();
+u32 getTime(void);
 
 /**
  * Converts the time from µs to ms.
