@@ -226,7 +226,7 @@ ISR(TIMER0_OVF_vect)//each 10 ms
 {
 	handleDebug();
 	TCNT0 = 256-157;//each 10 ms
-	USB_USBTask();
+	//USB_USBTask();
 #if 0
 	if (USB_DeviceState == DEVICE_STATE_Configured)
 	{
