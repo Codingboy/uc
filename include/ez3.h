@@ -23,7 +23,7 @@ void initEz3(Ez3* ez3, Gpio* rx, u8 portRx, u8 bitRx, Gpio* tx, u8 portTx, u8 bi
  * Objects nearer than 15.24 cm will be detected as if they were in a range of 15.24 cm.
  * @pre \p ez3 is initialised
  * @pre time is initialised
- * @return distance to object in cm or 0 if no object was detected
+ * @return distance to object in cm or 0xffff if no object was detected
  */
 u16 measureEz3(Ez3* ez3);
 

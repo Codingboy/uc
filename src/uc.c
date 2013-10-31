@@ -143,7 +143,13 @@ void usbCheckLed(void)
 void usbReadEz3(void)
 {
 	Endpoint_ClearSETUP();//ack setup packet
-	Endpoint_ClearStatusStage();//ack control request
+	u16 dist = measureEz3(&ez3);
+	while (!Endpoint_IsINReady())
+	{
+		//wait until host is ready
+	}
+	Endpoint_Write_16_LE(dist);
+	Endpoint_ClearIN();
 }
 
 /*
@@ -170,7 +176,7 @@ check led
 read ez3
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_DEVICETOHOST
 	bRequest = 4
-	dataOUT = 
+	wLength = 2
 */
 void EVENT_USB_Device_ControlRequest(void)
 {

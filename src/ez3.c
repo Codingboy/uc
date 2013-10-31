@@ -32,7 +32,7 @@ u16 measureEz3(Ez3* ez3)
 	u32 time = getTime();
 	if (time >= timestamp+37500)
 	{
-		return 0;//no object in range
+		return 0xffff;//no object in range
 	}
 	else
 	{
