@@ -152,7 +152,7 @@ void usbReadEz3(void)
 	{
 		//wait until host is ready
 	}
-	Endpoint_Write_16_LE(dist);
+	Endpoint_Write_16_BE(dist);
 	Endpoint_ClearIN();
 }
 
@@ -181,6 +181,7 @@ read ez3
 	bmRequestType = REQTYPE_VENDOR | REQREC_DEVICE | REQDIR_DEVICETOHOST
 	bRequest = 4
 	wLength = 2
+	BIG ENDIAN
 */
 void EVENT_USB_Device_ControlRequest(void)
 {
