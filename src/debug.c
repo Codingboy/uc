@@ -1,5 +1,3 @@
-#ifdef DEBUG
-
 #include "led.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -9,17 +7,6 @@ static volatile u8 DEBUGMODE;
 static volatile u8 DEBUGSTATE;
 static Led DEBUGLED;
 static Gpio DEBUGGPIO;
-static volatile u8 BREAKPOINT;
-
-void breakpointDebug(void)
-{
-	BREAKPOINT = 1;
-	while (BREAKPOINT)
-	{
-
-	}
-}
-
 void initDebug(void)
 {
 	DEBUGMODE = 0;
@@ -197,5 +184,3 @@ void handleDebug(void)
 			break;
 	}
 }
-
-#endif

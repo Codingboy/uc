@@ -1,8 +1,6 @@
 #ifndef DEBUG_H
 #define DEBUG_H
 
-#ifdef DEBUG
-
 #include "typedefs.h"
 
 /**
@@ -20,12 +18,5 @@ void setDebug(u8 debugLevel);
  * This function handles the debugled and must be called each 10 ms.
  */
 void handleDebug(void);
-
-/**
- * Halts the system until BREAKPOINT is cleared by an ISR.
- */
-void breakpointDebug(void);
-
-#endif
 
 #endif
