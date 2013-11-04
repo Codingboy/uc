@@ -25,6 +25,7 @@ Gpio ez3pw;
 Gpio ez3tx;
 Gpio ez3rx;
 
+//ISR for time
 ISR(TIMER1_OVF_vect)//each 100µs
 {
 	incrementTime();
@@ -240,6 +241,7 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 	Endpoint_ConfigureEndpoint(OUT_EPNUM, EP_TYPE_BULK, IO_EPSIZE, 1);
 }
 
+//ISR for debugled
 ISR(TIMER0_OVF_vect)//each 10 ms
 {
 	handleDebug();
