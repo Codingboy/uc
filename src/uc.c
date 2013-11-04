@@ -7,7 +7,7 @@
 #include <avr/delay.h>
 #include <avr/wdt.h>
 #include <avr/power.h>
-
+#include "time.h"
 #include <USB.h>
 #include <Endpoint_AVR8.h>
 #include "descriptors.h"
@@ -24,6 +24,13 @@ Ez3 ez3;
 Gpio ez3pw;
 Gpio ez3tx;
 Gpio ez3rx;
+
+ISR(TIMER1_OVF_vect)//each 100µs
+{
+	incrementTime();
+	TCNT1H = 0xff;
+	TCNT1L = 0xff - 25;
+}
 
 void usbOnLed(void)
 {
@@ -248,6 +255,7 @@ int main(void)
 	initLed(&led1, &gpioLed1, 1, 1, 1);
 	initLed(&led2, &gpioLed2, 1, 2, 1);
 	initLed(&led3, &gpioLed3, 1, 3, 1);
+	initTime();
 	initEz3(&ez3, &ez3rx, 3, 1, &ez3tx, 3, 0, &ez3pw, 3, 2);
 	MCUSR &= ~(1<<WDRF);
 	wdt_disable();
